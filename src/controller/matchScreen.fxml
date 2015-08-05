@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MatchScreenControl">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="103.33333587646484" minHeight="10.0" prefHeight="44.66666793823242" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="159.99999809265137" minHeight="0.0" prefHeight="42.666664123535156" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="417.33333587646484" minHeight="10.0" prefHeight="258.0000305175781" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="210.99996948242188" minHeight="10.0" prefHeight="210.99996948242188" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Button id="kickOff" fx:id="startButton" alignment="CENTER" layoutX="800.0" layoutY="600.0" mnemonicParsing="false" onAction="#startGame" prefHeight="68.0" prefWidth="107.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Label id="opponents" fx:id="lineUp" prefHeight="30.0" text="opponents for tonight" textAlignment="CENTER" textFill="#d3c6c6" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </Label>
+      <Label text="homeScore  " GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin>
+      </Label>
+      <SplitPane fx:id="statsPanel" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <items>
+          <AnchorPane maxHeight="30.0" minHeight="0.0" minWidth="0.0" prefHeight="30.0" prefWidth="160.0">
+               <children>
+                  <Label layoutX="169.0" layoutY="6.0" text="Match Stats" textAlignment="CENTER" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="statsTable" editable="true" layoutX="99.0" layoutY="-44.0" prefHeight="235.0" prefWidth="398.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="colx" prefWidth="75.0" text="Stat" />
+                      <TableColumn prefWidth="75.0" text="Home" />
+                        <TableColumn prefWidth="75.0" text="Away" />
+                        <TableColumn prefWidth="75.0" text="Total" />
+                    </columns>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </AnchorPane>
+        </items>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </SplitPane>
+      <Pane id="pitchPanel" fx:id="pitchPanel" layoutX="10.0" layoutY="50.0" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+         <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </GridPane.margin>
+         <children>
+            <ImageView fitHeight="161.0" fitWidth="338.0" layoutX="53.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../sample/pitch.png" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </Pane>
+      <Label text="awayScore" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="25.0" />
+         </GridPane.margin>
+      </Label>
+      <SplitPane fx:id="commentaryPanel" dividerPositions="0.16236162361623616" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" GridPane.rowIndex="2">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label layoutX="185.0" layoutY="19.0" text="Commentary" textAlignment="CENTER" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <ScrollPane fx:id="scrollCommentary" layoutX="45.0" layoutY="12.0" prefHeight="200.0" prefWidth="318.0">
+                     <content>
+                        <TextArea fx:id="textCommentary" prefHeight="200.0" prefWidth="306.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</GridPane>

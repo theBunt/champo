@@ -1,0 +1,42 @@
+.root {
+    -fx-background-color: #14A799;
+	-fx-background-image: url("images/menuScreen.jpg");
+	-fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: top left;
+}
+
+.button {
+	-fx-font: 16px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #CCFF99;
+}
+
+#playButton {
+	-fx-opacity: 0.5;
+	}
+
+.mainImage {
+    -fx-image: url("mainScreen.jpg");
+}
+
+#playButton:hover {
+	-fx-opacity: 0.8;
+	-fx-image: url("kickOff.jpg");
+	}
+
+#statsTable #colx .label {
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-text-fill: mediumvioletred;
+    -fx-background-color: linear-gradient(to bottom, azure, mediumturquoise);
+}
+
+#commentaryPanel {
+    -fx-background-color: rgb(255,0,0,0);
+    /*-fx-opacity: 0.5;*/
+}
+
+#statsPanel {
+    -fx-background-color: rgb(255,255,0,0.5);
+}
