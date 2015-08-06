@@ -1,13 +1,15 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import model.Fixture;
 import model.Match;
 import model.Team;
@@ -24,21 +26,31 @@ import java.util.ResourceBundle;
 public class MatchScreenControl implements Initializable {
 
     public TextArea textCommentary;
+    public Label homeShotStat;
+    public Label awayShotStat;
     @FXML
-    private ScrollPane scrollCommentary;
+    public Label homeGoalStat;
+    public Label awayGoalStat;
+    public Label homeScoreBoard;
+    public Label awayScoreBoard;
+    @FXML
+    //private ScrollPane scrollCommentary;
     private Match game;
     @FXML
     private Label lineUp;
-
     @FXML
     private Fixture teams;
     private Team homeTeam;
+    private StringProperty hg;
+    private StringProperty ag;
+    private IntegerProperty hs;
+    private IntegerProperty as;
     private Team awayTeam;
     private int areaOfPitch;
     Random rand = new Random();
     private int changeovers = 0;
     private boolean possession;
-    private int homeGoal;
+    private int homeGoal = 0;
     private int awayGoal;
     private int homeShots;
     private int awayShots;
@@ -49,17 +61,12 @@ public class MatchScreenControl implements Initializable {
         awayTeam = new Team("United","Old Trafford",78,85,78,81);
         teams = new Fixture(homeTeam,awayTeam);
         game = new Match(teams);
+
+
     }
 
-    /*public MatchScreenControl(Match game) {
-        this.game = game;
-    }*/
-
-    public void setTeams() {
-        Team homeTeam = new Team("Liverpool","Anfield",82,88,82,79);
-        Team awayTeam = new Team("United","Old Trafford",78,85,78,81);
-        teams = new Fixture(homeTeam,awayTeam);
-        Match game = new Match(teams);
+    public StringProperty counterHomeGoal() {
+        return hg;
     }
 
     public void playMatch() {
@@ -205,11 +212,13 @@ public class MatchScreenControl implements Initializable {
         if(possession){
             homeGoal++;
             teams.increaseHomeGoal();
+            hg.set(String.valueOf(homeGoal));
         }
         else
         {
             awayGoal++;
             teams.increaseAwayGoal();
+            ag.set(String.valueOf(awayGoal));
         }
         scored.increaseGoalsFor();
         conceeded.increaseGoalsAgainst();
@@ -369,5 +378,13 @@ public class MatchScreenControl implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lineUp.setText(homeTeam.getName()+"\tv\t"+awayTeam.getName());
+        hg = new SimpleStringProperty(String.valueOf(homeGoal));
+        ag = new SimpleStringProperty(String.valueOf(awayGoal));
+        homeGoalStat.textProperty().bind(hg);
+        //homeShotStat.textProperty().bind(hs);
+        awayGoalStat.textProperty().bind(ag);
+        //homeShotStat.textProperty().bind(hs);
+        homeScoreBoard.textProperty().bind(hg);
+        awayScoreBoard.textProperty().bind(ag);
     }
 }
