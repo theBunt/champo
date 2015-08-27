@@ -1,10 +1,15 @@
 package model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  * Created by User on 08/07/2015.
  */
 public class Team implements FootInt{
 
+    private StringProperty teamName;
     private String name;
     private int wins ;
     private int loss ;
@@ -13,9 +18,9 @@ public class Team implements FootInt{
     private int goalsAgainst ;
     private int points;
     private int goalDiff;
-    private int winCount;
+    /*private int winCount;
     private int drawCount;
-    private int lossCount;
+    private int lossCount;*/
     private String stadium;
     private int goalkeeping;
     private int defence;
@@ -24,31 +29,34 @@ public class Team implements FootInt{
 
     //default Constructor
     Team(){
-        name = " ";
-        wins = 0;
-        loss = 0;
-        draw = 0;
-        points = 0;
-        goalsFor = 0;
-        goalsAgainst = 0;
-        points = 0;
+       /* wins.setValue(0);
+        loss.setValue(0);
+        draw.setValue(0);
+        points.setValue(0);
+        goalsFor.setValue(0);
+        goalsAgainst.setValue(0);
+        points.setValue(0);*/
         stadium = "";
     }
 
-    public Team(String name, String stad, int goalkeeping, int defence, int midfield, int attack) {
-        this.name = name;
-        this.stadium = stad;
-        this.goalkeeping = goalkeeping;
-        this.defence = defence;
-        this.midfield = midfield;
-        this.attack = attack;
-        goalsFor = 0;
-        goalsAgainst = 0;
+    public Team(String name, String stadium, int goalkeeping, int defence, int midfield, int attack) {
+        this.teamName = new SimpleStringProperty(name);
+        this.stadium = stadium;
+        /*this.goalkeeping.setValue(goalkeeping);
+        this.defence.setValue(defence);
+        this.midfield.setValue(midfield);
+        this.attack.setValue(attack);*/
+        this.goalkeeping=goalkeeping;
+        this.defence=defence;
+        this.midfield=midfield;
+        this.attack=attack;
     }
 
-    public String toString(){
-        return name +"\t\t"+wins+"\t\t"+loss+"\t\t"+draw+"\t\t"+goalDiff+"\t\t"+points;
-    }
+    /*public SimpleStringProperty printTeam(){
+        String stats = getName() +"\t\t"+wins+"\t\t"+loss+"\t\t"+draw+"\t\t"+goalDiff+"\t\t"+points;
+        SimpleStringProperty team = new SimpleStringProperty(name);
+        return team ;
+    }*/
 
     public int getWins() {
         return wins;
@@ -66,8 +74,12 @@ public class Team implements FootInt{
         return points;
     }
 
-    public String getName() {
+    /*public SimpleStringProperty getTeamName() {
         return name;
+    }*/
+
+    public String getName() {
+        return teamName.get();
     }
 
     public void calcGoalDiff(){
@@ -112,10 +124,19 @@ public class Team implements FootInt{
     }
 
     public void increaseGoalsFor(){
-        goalsFor++;
+        //goalsFor.setAm
     }
 
     public void increaseGoalsAgainst(){
         goalsAgainst++;
+    }
+
+    public int compareTo(Team compare) {
+        int comparePoints=((Team)compare).getPoints();
+        /* For Ascending order*/
+        //return this.points-comparePoints;
+
+        /* For Descending order do like this */
+        return comparePoints-this.points;
     }
 }

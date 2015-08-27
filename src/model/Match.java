@@ -8,9 +8,9 @@ import java.util.Random;
  */
 public class Match implements Runnable {
 
-    private Fixture teams;
-    private Team homeTeam;
-    private Team awayTeam;
+    //private Fixture teams;
+    protected Team homeTeam;
+    protected Team awayTeam;
     private int areaOfPitch;
     Random rand = new Random();
     private int changeovers = 0;
@@ -21,10 +21,27 @@ public class Match implements Runnable {
     private int awayShots;
     private boolean stop = false;
 
+    /*public Fixture getTeams() {
+        return teams;
+    }*/
+
+    public int getHomeGoal() {
+        return homeGoal;
+    }
+
+    public int getAwayGoal() {
+        return awayGoal;
+    }
+
     public Match() {
     }
 
-    public Match(Fixture teams) {
+    public Match(Team homeTeam, Team awayTeam) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+    }
+
+    /*public Match(Fixture teams) {
         this.teams = teams;
         homeTeam = teams.getHomeTeam();
         awayTeam = teams.getAwayTeam();
@@ -32,15 +49,23 @@ public class Match implements Runnable {
         awayGoal = 0;
         homeShots = 0;
         awayShots = 0;
-    }
+    }*/
 
     @Override
     public void run() {
        playMatch();
     }
 
+    public Team getHomeTeam() {
+        return homeTeam;
+    }
+
+    public Team getAwayTeam() {
+        return awayTeam;
+    }
+
     public void playMatch() {
-        System.out.print(teams.toString());
+        //System.out.print(teams.toString());
         ArrayList<String> commentary = new ArrayList<String>();
         //flip coin to see who kicks off
         possession = flipCoin();
@@ -59,7 +84,7 @@ public class Match implements Runnable {
                 if (minutes == 45) {
                     System.out.println("\nHALF TIME");
                     System.out.println("changeovers = " + changeovers);
-                    System.out.println(homeTeam.getName() + " " + teams.getHomeGoal() + " - " + teams.getAwayGoal() + " " + awayTeam.getName());
+                    System.out.println(homeTeam.getName() + " " + getHomeGoal() + " - " + getAwayGoal() + " " + awayTeam.getName());
                     System.out.println("Press enter to continue:");
                     //in.nextLine();
                     if (!possession)
@@ -75,7 +100,7 @@ public class Match implements Runnable {
         System.out.println("\nchangeovers = " + changeovers);
         System.out.println("FULL TIME");
         System.out.println("Shots: \n\t home = " + homeShots + "\taway = " + awayShots);
-        System.out.println(homeTeam.getName() + " " + teams.getHomeGoal() + " - " + teams.getAwayGoal() + " " + awayTeam.getName());
+        //System.out.println(homeTeam.getName() + " " + teams.getHomeGoal() + " - " + teams.getAwayGoal() + " " + awayTeam.getName());
     }
 
 
@@ -159,12 +184,12 @@ public class Match implements Runnable {
         System.out.println("GOAL SCORED!!");
         if(possession){
             homeGoal++;
-            teams.increaseHomeGoal();
+            //teams.increaseHomeGoal();
         }
         else
         {
             awayGoal++;
-            teams.increaseAwayGoal();
+            //teams.increaseAwayGoal();
         }
         scored.increaseGoalsFor();
         conceeded.increaseGoalsAgainst();
