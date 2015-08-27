@@ -26,6 +26,11 @@ public class GroupController implements Initializable{
     public TableColumn winCol;
     public VBox groupVBox;
     public Label headers;
+    public TableColumn lossCol;
+    public TableColumn drawCol;
+    public TableColumn goalForCol;
+    public TableColumn goalAgainstCol;
+    public TableColumn pointsCol;
     private Match game;
 
     public GroupController() {
@@ -38,8 +43,16 @@ public class GroupController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //setting the values for the table columns
         teamName.setCellValueFactory(new PropertyValueFactory<Team, String>("name"));
-        winCol.setCellValueFactory(new PropertyValueFactory<Team, String>("name"));
+        winCol.setCellValueFactory(new PropertyValueFactory<Team, Integer>("wins"));
+        lossCol.setCellValueFactory(new PropertyValueFactory<Team, Integer>("loss"));
+        drawCol.setCellValueFactory(new PropertyValueFactory<Team, Integer>("draw"));
+        goalForCol.setCellValueFactory(new PropertyValueFactory<Team, Integer>("goalsFor"));
+        goalAgainstCol.setCellValueFactory(new PropertyValueFactory<Team, Integer>("goalAgainst"));
+        pointsCol.setCellValueFactory(new PropertyValueFactory<Team, Integer>("points"));
+
+
         groupA_table.setItems(MainApplication.getGroupA());
 
         //headers.setText("Team\twins\tloss\tdraw");
