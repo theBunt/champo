@@ -1,6 +1,6 @@
-.root {
-    -fx-background-color: #14A799;
-	-fx-background-image: url("images/menuScreen.jpg");
+#defaultScreen {
+    -fx-background-color: RED;
+	-fx-background-image: url("../images/menuScreen.jpg");
 	-fx-background-repeat: stretch;   
     -fx-background-size: cover;
     -fx-background-position: top left;
@@ -9,11 +9,11 @@
 .button {
 	-fx-font: 16px "Serif";
     -fx-padding: 10;
-    -fx-background-color: #CCFF99;
+    -fx-background-color: #888AA8;
 }
 
 #playButton {
-	-fx-opacity: 0.8;
+	-fx-opacity: 0.5;
 }
 
 #table {
@@ -41,7 +41,7 @@
 
 #playButton:hover {
 	-fx-opacity: 0.8;
-	-fx-image: url("kickOff.jpg");
+	-fx-image: url("images/kickOff.jpg");
 	}
 
 #statsTable #colx .label {

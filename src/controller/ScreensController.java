@@ -52,6 +52,7 @@ package controller;
         import javafx.fxml.FXMLLoader;
         import javafx.scene.Node;
         import javafx.scene.Parent;
+        import javafx.scene.layout.BackgroundImage;
         import javafx.scene.layout.StackPane;
         import javafx.util.Duration;
 
@@ -61,6 +62,7 @@ package controller;
  */
 public class ScreensController  extends StackPane {
     //Holds the screens to be displayed
+
 
     private HashMap<String, Node> screens = new HashMap<>();
 
@@ -84,12 +86,13 @@ public class ScreensController  extends StackPane {
         try {
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
             Parent loadScreen = (Parent) myLoader.load();
-            loadScreen.getStylesheets().add("styles.css");
-            ControlledScreen myScreenControler = ((ControlledScreen) myLoader.getController());
-            myScreenControler.setScreenParent(this);
+            ControlledScreen myScreenController = ((ControlledScreen) myLoader.getController());
+            myScreenController.setScreenParent(this);
+            loadScreen.getStylesheets().add("test/styles.css");
             addScreen(name, loadScreen);
             return true;
         } catch (Exception e) {
+            System.out.println("HERE");
             System.out.println(e.getMessage());
             return false;
         }
@@ -125,7 +128,7 @@ public class ScreensController  extends StackPane {
                 Timeline fadeIn = new Timeline(
                         //This allows a 2.5 second fade in
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                        new KeyFrame(new Duration(2500), new KeyValue(opacity, 1.0)));
+                        new KeyFrame(new Duration(750), new KeyValue(opacity, 1.0)));
                 fadeIn.play();
             }
             return true;

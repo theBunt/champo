@@ -1,5 +1,8 @@
 package controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,11 +15,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.Fixture;
 import model.GroupMatch;
 import model.Match;
 import model.Team;
 import javafx.fxml.FXML;
+import test.MainApplication;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -27,7 +32,7 @@ import java.util.ResourceBundle;
 /**
  * Created by User on 19/07/2015.
  */
-public class MatchScreenControl implements Initializable {
+public class MatchScreenControl implements Initializable, ControlledScreen {
 
     public TextArea textCommentary;
     public Label homeShotStat;
@@ -51,6 +56,7 @@ public class MatchScreenControl implements Initializable {
     public Rectangle r1;
     public Rectangle r2;
     public ProgressBar possessionBar;
+    public SplitPane commentaryPanel;
     private SimpleDoubleProperty prop;
     @FXML
     //private ScrollPane scrollCommentary;
@@ -94,9 +100,9 @@ public class MatchScreenControl implements Initializable {
         awayTeam = new Team("United","Old Trafford",78,85,78,81);
         //teams = new Fixture(homeTeam,awayTeam);
         game = new Match(homeTeam, awayTeam);
-
-
     }
+
+    ScreensController myController;
 
     public StringProperty counterHomeGoal() {
         return hg;
@@ -570,5 +576,13 @@ public class MatchScreenControl implements Initializable {
         r2.setFill(Color.BLACK);
 
 
+    }
+
+    public void setScreenParent(ScreensController screenParent){
+        myController = screenParent;
+    }
+
+    public void returnToMain(ActionEvent actionEvent) {
+        myController.setScreen(MainApplication.mainScreenID);
     }
 }

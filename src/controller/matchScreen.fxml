@@ -21,7 +21,7 @@
       <RowConstraints maxHeight="210.99996948242188" minHeight="10.0" prefHeight="210.99996948242188" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button id="kickOff" fx:id="startButton" alignment="CENTER" layoutX="800.0" layoutY="600.0" mnemonicParsing="false" onAction="#startGame" prefHeight="68.0" prefWidth="107.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button id="kickOff" fx:id="startButton" alignment="CENTER" layoutX="800.0" layoutY="600.0" mnemonicParsing="false" onAction="#startGame" prefHeight="68.0" prefWidth="107.0" text="Kick Off" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Label id="opponents" fx:id="lineUp" prefHeight="30.0" text="Home Team" textAlignment="CENTER" textFill="#d7cccc" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -162,5 +162,6 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </Label>
+      <Button fx:id="mainMenu" mnemonicParsing="false" onAction="#returnToMain" stylesheets="@../test/styles.css" text="Back to Main" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
 </GridPane>

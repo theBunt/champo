@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Fixture;
@@ -41,12 +42,12 @@ public class MainApplication extends Application {
         mainContainer.loadScreen(MainApplication.mainScreenID, MAIN);
         mainContainer.loadScreen(MainApplication.matchScreenID, MATCH_SCREEN);
         mainContainer.loadScreen(MainApplication.groupScreenID, GROUP_SCREEN);
-
+        //mainContainer.setId("defaultScreen");
         mainContainer.setScreen(MainApplication.mainScreenID);
         Group root = new Group();
+        root.setId("defaultScreen");
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);
-        mainContainer.getStylesheets().add("styles.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 

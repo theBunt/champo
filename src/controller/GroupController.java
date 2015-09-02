@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 /**
  * Created by User on 23/08/2015.
  */
-public class GroupController implements Initializable{
+public class GroupController implements Initializable, ControlledScreen{
 
 
     public TableView groupA_table;
@@ -35,6 +36,8 @@ public class GroupController implements Initializable{
 
     public GroupController() {
     }
+
+    ScreensController myController;
 
     public GroupController(Match game) {
         this.game = game;
@@ -56,5 +59,13 @@ public class GroupController implements Initializable{
         groupA_table.setItems(MainApplication.getGroupA());
 
         //headers.setText("Team\twins\tloss\tdraw");
+    }
+
+    public void returnToMain(ActionEvent actionEvent) {
+        myController.setScreen(MainApplication.mainScreenID);
+    }
+
+    public void setScreenParent(ScreensController screenParent){
+        myController = screenParent;
     }
 }

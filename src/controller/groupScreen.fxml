@@ -9,25 +9,36 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GroupController">
+
+<AnchorPane styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GroupController">
    <children>
-      <Label text="Group A" textFill="#d0d5d7">
-         <VBox.margin>
-            <Insets bottom="15.0" left="35.0" right="35.0" top="10.0" />
-         </VBox.margin></Label>
-      <TableView id="table" fx:id="groupA_table" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn fx:id="teamName" editable="false" prefWidth="163.0" text="Team" />
-          <TableColumn fx:id="winCol" editable="false" minWidth="8.0" prefWidth="40.0" text="Win" />
-            <TableColumn fx:id="lossCol" editable="false" prefWidth="56.0" text="Loss" />
-            <TableColumn fx:id="drawCol" editable="false" prefWidth="51.0" text="Draw" />
-            <TableColumn fx:id="goalForCol" editable="false" prefWidth="61.0" text="Goals For" />
-            <TableColumn fx:id="goalAgainstCol" editable="false" prefWidth="88.0" text="Goals Against" />
-            <TableColumn fx:id="pointsCol" editable="false" prefWidth="55.0" text="Points" />
-        </columns>
-         <VBox.margin>
-            <Insets left="40.0" right="40.0" />
-         </VBox.margin>
-      </TableView>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label text="Group A" textFill="#d0d5d7">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="35.0" right="35.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TableView id="table" fx:id="groupA_table" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="teamName" editable="false" prefWidth="163.0" text="Team" />
+                <TableColumn fx:id="winCol" editable="false" minWidth="8.0" prefWidth="40.0" text="Win" />
+                  <TableColumn fx:id="lossCol" editable="false" prefWidth="56.0" text="Loss" />
+                  <TableColumn fx:id="drawCol" editable="false" prefWidth="51.0" text="Draw" />
+                  <TableColumn fx:id="goalForCol" editable="false" prefWidth="61.0" text="Goals For" />
+                  <TableColumn fx:id="goalAgainstCol" editable="false" prefWidth="88.0" text="Goals Against" />
+                  <TableColumn fx:id="pointsCol" editable="false" prefWidth="55.0" text="Points" />
+              </columns>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </TableView>
+            <Button fx:id="backButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#returnToMain" stylesheets="@../test/styles.css" text="Back to Main">
+               <VBox.margin>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</AnchorPane>

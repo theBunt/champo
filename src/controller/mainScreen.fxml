@@ -10,34 +10,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+
+<AnchorPane id="defaultScreen" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <children>
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="57.0" prefWidth="476.0" text="Champions League" textAlignment="RIGHT" GridPane.columnSpan="2">
-         <textFill>
-            <LinearGradient endX="0.519047619047619" endY="0.8238095238095238" startX="0.519047619047619" startY="0.02857142857142857">
-               <stops>
-                  <Stop color="BLACK" />
-                  <Stop color="#33619a" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </textFill>
-         <font>
-            <Font name="Marlett" size="55.0" />
-         </font>
-      </Label>
-      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1366.0" stylesheets="@../test/styles.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -45,26 +25,71 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button id="playButton" fx:id="playButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#kickOff" onMouseEntered="#playhover" prefHeight="150.0" prefWidth="200.0" text="Play Match">
-               <GridPane.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="groupsButton" mnemonicParsing="false" onAction="#viewGroups" onMouseEntered="#viewHover" prefHeight="150.0" prefWidth="200.0" text="View Groups" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="fixtureButton" mnemonicParsing="false" onAction="#viewFixtures" onMouseEntered="#fixturesHover" prefHeight="150.0" prefWidth="200.0" text="Fixtures &amp; Results" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </GridPane.margin>
-            </Button>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="57.0" prefWidth="476.0" text="Champions League" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2">
+               <textFill>
+                  <LinearGradient endX="0.519047619047619" endY="0.8238095238095238" startX="0.519047619047619" startY="0.02857142857142857">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="#33619a" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <font>
+                  <Font name="Marlett" size="55.0" />
+               </font>
+            </Label>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button id="playButton" fx:id="playButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#kickOff" onMouseEntered="#playhover" onMouseExited="#buttonUnhover" prefHeight="150.0" prefWidth="200.0" text="Play Match">
+                     <GridPane.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="groupsButton" mnemonicParsing="false" onAction="#viewGroups" onMouseEntered="#viewHover" onMouseExited="#buttonUnhover" prefHeight="150.0" prefWidth="200.0" text="View Groups" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="fixtureButton" mnemonicParsing="false" onAction="#viewFixtures" onMouseEntered="#fixturesHover" onMouseExited="#buttonUnhover" prefHeight="150.0" prefWidth="200.0" text="Fixtures &amp; Results" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
+            <StackPane fx:id="imageStack" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="defaultImage" fitHeight="470.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../images/soccer-suit.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="kickOffImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/soccer-ball.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="groupsImg" fitHeight="468.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Champions-League-Trophy.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="fixturesImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/groups.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
          </children>
       </GridPane>
-      <ImageView fx:id="defaultImage" fitHeight="470.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <image>
-            <Image url="@../images/soccer-suit.jpg" />
-         </image></ImageView>
    </children>
-</GridPane>
+</AnchorPane>
