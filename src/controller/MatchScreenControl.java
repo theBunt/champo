@@ -23,6 +23,7 @@ import model.Team;
 import javafx.fxml.FXML;
 import test.MainApplication;
 
+import java.math.RoundingMode;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
     public Rectangle r2;
     public ProgressBar possessionBar;
     public SplitPane commentaryPanel;
+    public Label homePossessionStat;
+    public Label awayPossessionStat;
     private SimpleDoubleProperty prop;
     @FXML
     //private ScrollPane scrollCommentary;
@@ -77,6 +80,8 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
     private StringProperty homeSave;
     private StringProperty awaySave;
     private StringProperty totalSave;
+    private StringProperty homePossSp;
+    private StringProperty awayPossSp;
     private Team awayTeam;
     private int areaOfPitch;
     Random rand = new Random();
@@ -91,7 +96,9 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
     private int homeSaveCounter;
     private int awaySaveCounter;
     private int teamPossessionCounter;
-    private double possessionPercent;
+    private int homePossValue;
+    private int awayPossValue;
+    private int possessionPercent;
     private boolean stop = false;
     private SimpleStringProperty ts;
 
@@ -116,19 +123,21 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
                 //flip coin to see who kicks off
                 possessionBar.progressProperty().bind(prop);
                 possession = flipCoin();
-                double mm;
-                //teamPossessionCounter = 1;
+                boolean homeKickedOff = possession;
                 if (possession) {
                     areaOfPitch = kickOff(homeTeam);
-                    updateCommentary(String.format("%s to kick off.", homeTeam.getName()));
+
                 } else {
                     areaOfPitch = kickOff(awayTeam);
-                    updateCommentary(String.format(awayTeam.getName() + " to kick off."));
+
                 }
                 try {
                     for (int minutes = 1; minutes < 91; minutes++) {
                         Thread.sleep(10);
-                        possessionPercent = calcTeamPossession(possession, minutes, teamPossessionCounter);
+                        if((minutes%5 == 0)||(minutes%10 == 0)) {
+                            possessionPercent = calcTeamPossession(possession, minutes, teamPossessionCounter);
+                        }
+
                         System.out.println("team poss count = "+teamPossessionCounter);
                         System.out.println("team poss percentage = "+possessionPercent);
                         System.out.println(String.format(minutes + " mins"));
@@ -141,7 +150,7 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
                             System.out.println(homeTeam.getName() + " " + homeGoal + " - " + awayGoal + " " + awayTeam.getName());
                             System.out.println("Press enter to continue:");
                             //in.nextLine();
-                            if (!possession) {
+                            if (!homeKickedOff) {
                                 System.out.println(homeTeam.getName() + " to kick off the 2nd half.");
                                 updateCommentary(String.format(homeTeam.getName() + " to kick off the 2nd half."));
                             } else {
@@ -168,10 +177,13 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
                                 awaySave.set(String.valueOf(awaySaveCounter));
                                 totalSave.set(String.valueOf(homeSaveCounter+awaySaveCounter));
                                 ballArea.setX(positionBallX());
-                                System.out.println("Ball position = "+areaOfPitch+"\nx = "+ballArea.getX()+"\ty = "+ballArea.getY());
+                                System.out.println("Ball position = " + areaOfPitch + "\nx = " + ballArea.getX() + "\ty = " + ballArea.getY());
+                                homePossSp.setValue(String.valueOf(possessionPercent));
+                                awayPossSp.setValue(String.valueOf(100 - possessionPercent));
+
                                 //possessionBar.setProgress(possessionPercent);
                                 prop.set(possessionPercent);
-                                System.out.println("Progress = "+possessionBar.getProgress());
+                                //System.out.println("Progress = "+possessionBar.getProgress());
                             }
                         });
                     }
@@ -190,22 +202,28 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
                 System.out.println(homeTeam.getName() + " " + homeGoal + " - " + awayGoal + " " + awayTeam.getName());
             }
 
-            private double calcTeamPossession(boolean possession, int minutes, int count) {
-                /*possessionPercent = (int) (teamPossessionCounter/minutes);
+            private int calcTeamPossession(boolean possession, int minutes, int count) {
+                double p =  (count/(double)minutes)*100;
+
                 NumberFormat defaultFormat = NumberFormat.getPercentInstance();
-                defaultFormat.setMinimumFractionDigits(1);
-                System.out.println("Percent format: " + defaultFormat.format(possessionPercent));
-                if(possession)
-                    teamPossessionCounter++;
-                System.out.println("Team possession = "+possessionPercent);
-                return possessionPercent;*/
-                System.out.println("minutes in poss calc = "+minutes);
-                possessionPercent = (double) (count/minutes);
+                defaultFormat.setRoundingMode(RoundingMode.HALF_DOWN);
+                defaultFormat.setMinimumFractionDigits(0);
+
+                System.out.println("Percent format: " + defaultFormat.format(p));
                 if(possession)
                     teamPossessionCounter++;
                 //System.out.println("Team possession = "+possessionPercent);
+                return (int)(p);
 
-                return possessionPercent;
+                /*double p =  (count/(double)minutes);
+                System.out.println("\t p = "+p+"\tminutes in  = "+minutes+"\tcount = "+count);
+
+                possessionPercent = (int) p*100;
+                if(possession)
+                    teamPossessionCounter++;
+                System.out.println("Team possession = "+possessionPercent);
+
+                return possessionPercent;*/
             }
 
             private int positionBallX() {
@@ -235,7 +253,7 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
 
     public void updateCommentary(String s){
         try {
-            Thread.sleep(450);
+            Thread.sleep(150);
         } catch(InterruptedException e) {
             throw new RuntimeException("Don't know how to handle this", e);
         }
@@ -289,9 +307,9 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
     public void save() {
         int outcome = rand.nextInt(3);
         if(possession)
-            homeSaveCounter++;
-        else
             awaySaveCounter++;
+        else
+            homeSaveCounter++;
         switch (outcome){
             case 0:
                 //the outcome is a rebound
@@ -505,13 +523,6 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
 
 
     public void startGame(ActionEvent actionEvent) {
-        /*homeShotStat.setText("0");
-        awayShotStat.setText("0");
-        homeGoalStat.setText("0");
-        awayGoalStat.setText("0");
-        homeScoreBoard.setText("0");
-        awayScoreBoard.setText("0");
-        totalShotStat.setText("0");*/
         playMatch();
     }
 
@@ -519,10 +530,7 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
     public void initialize(URL location, ResourceBundle resources) {
         lineUp.setText(homeTeam.getName());
         lineUp1.setText(awayTeam.getName());
-        //Image ball = new Image("images/soccer-ball.png");
-
-
-        //assign value to StringProperty
+        //assign value to StringProperties
         //goals
         hg = new SimpleStringProperty(String.valueOf(homeGoal));
         ag = new SimpleStringProperty(String.valueOf(awayGoal));
@@ -539,6 +547,10 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
         homeSave = new SimpleStringProperty(String.valueOf(homeSaveCounter));
         awaySave = new SimpleStringProperty(String.valueOf(awaySaveCounter));
         totalSave = new SimpleStringProperty(String.valueOf(homeSaveCounter+awaySaveCounter));
+        //possession
+        homePossSp = new SimpleStringProperty(String.valueOf(possessionPercent));
+        awayPossSp = new SimpleStringProperty(String.valueOf(possessionPercent));
+
         //bind label to StringProperty
         //goals
         homeScoreBoard.textProperty().bind(hg);
@@ -559,21 +571,15 @@ public class MatchScreenControl implements Initializable, ControlledScreen {
         homeSaveStat.textProperty().bind(homeSave);
         awaySaveStat.textProperty().bind(awaySave);
         totalSaveStat.textProperty().bind(totalSave);
+        //possession
+        homePossessionStat.textProperty().bind(homePossSp);
+        awayPossessionStat.textProperty().bind(awayPossSp);
 
         prop = new SimpleDoubleProperty(0);
         possessionBar = new ProgressBar();
         possessionBox = new HBox(possessionBar);
 
 
-        r1 = new Rectangle();
-        //r2 = new Rectangle();
-        r1.setWidth(teamPossessionCounter);
-        //r1.heightProperty().bind(this.getTableRow().heightProperty().multiply(0.5));
-        //r1.setStyle("-fx-fill:#f3622d;");
-        r2 = new Rectangle();
-        //r2.widthProperty().bind(param.widthProperty().multiply(ratio2));
-        //r2.setStyle("-fx-fill:#fba71b;");
-        r2.setFill(Color.BLACK);
 
 
     }

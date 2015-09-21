@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -15,7 +16,9 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
@@ -28,14 +31,13 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable, ControlledScreen{
     public ImageView defaultImage;
-    public StackPane MainStack;
     public ImageView kickOffImg;
+    //public ImageView ballAnim = new ImageView(new Image("kickOff.jpg"));
     public StackPane imageStack;
     public ImageView groupsImg;
     public ImageView fixturesImg;
-    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
     @FXML
-    //private Image kickOffImg = new Image("kickOff.jpg");
+    //private Image ball = new Image("kickOff.jpg");
 
     ScreensController myController;
 
@@ -47,11 +49,9 @@ public class MainScreenController implements Initializable, ControlledScreen{
     private Stage stage;
     private Parent root;
 
-    public void changeImage(ActionEvent actionEvent) {
-        //if (actionEvent.getSource().equals(play)) {
-            System.out.println("moused over");
 
-    }
+
+
 @FXML
     public void kickOff(ActionEvent e) throws IOException {
         System.out.println("kick off button pressed");
@@ -64,8 +64,13 @@ public class MainScreenController implements Initializable, ControlledScreen{
         stage.setScene(matchScreen);
 
         stage.show();*/
-    //The method below replaces the above code using the stacked pane ScreensController
-        myController.setScreen(MainApplication.matchScreenID);
+    kickOffImg.setSmooth(true);
+    //KickOffAnim.start(kickOffImg, myController);
+
+    myController.setScreen(MainApplication.matchScreenID);
+
+        //The method below replaces the above code using the stacked pane ScreensController
+        //myController.setScreen(MainApplication.matchScreenID);
     }
 
 
@@ -126,8 +131,89 @@ public class MainScreenController implements Initializable, ControlledScreen{
         myController = screenParent;
     }
 
+    public void startAnimation(){
+        Pane animPane = new Pane();
+        System.out.printf("IMAGE SIZE: width = %.0f \t height = %.0f\n", kickOffImg.getFitWidth(),kickOffImg.getFitHeight());
+        double tempX, tempY;
+
+        Path path = new Path();
+        tempX = kickOffImg.getX();
+        tempY = kickOffImg.getY();
+        path.getElements().add (new MoveTo ((kickOffImg.getFitWidth()/2), (kickOffImg.getFitHeight()/2)));
+        path.getElements().add (new CubicCurveTo(-480f,200f, -490f, 100f, -400f, 50f));
+
+        System.out.println("Position x = "+kickOffImg.getX()+"\tY = "+kickOffImg.getY());
+
+        PathTransition pathTran = PathTransitionBuilder.create()
+                .duration(new Duration(2000.0))
+                .node(kickOffImg)
+                .path(path)
+                .orientation(PathTransition.OrientationType.NONE)
+                .interpolator(Interpolator.LINEAR)
+                .autoReverse(false)
+                .cycleCount(1)
+                .build();
+
+        pathTran.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent AE) {
+                kickOffImg.setX(0);
+                kickOffImg.setY(0);
+            }
+        });
+
+        RotateTransition rotateTransition =
+                new RotateTransition(Duration.millis(1800), kickOffImg);
+        rotateTransition.setByAngle(890f);
+        rotateTransition.setCycleCount(1);
+        rotateTransition.setAutoReverse(false);
+
+        //Scale Transition
+        ScaleTransition scaleTransition =
+                new ScaleTransition(Duration.millis(1900), kickOffImg);
+        scaleTransition.setToX(3f);
+        scaleTransition.setToY(3f);
+        scaleTransition.setToZ(8f);
+        scaleTransition.setCycleCount(1);
+        scaleTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent AE) {
+                kickOffImg.setFitHeight(80);
+                kickOffImg.setFitWidth(80);
+            }
+        });
+        scaleTransition.setAutoReverse(false);
+
+        ScaleTransition resetScale =
+                new ScaleTransition(Duration.millis(100), kickOffImg);
+        resetScale.setToX(-4f);
+        resetScale.setToY(-4f);
+        resetScale.setCycleCount(1);
+        resetScale.setAutoReverse(false);
+
+        ParallelTransition parallelTransition = new ParallelTransition();
+        parallelTransition.getChildren().addAll(
+                pathTran,
+                rotateTransition,
+                scaleTransition
+                //resetScale
+        );
+        parallelTransition.setCycleCount(1);
+        parallelTransition.play();
+        resetScale.play();
+
+        parallelTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent AE) {
+                myController.setScreen(MainApplication.matchScreenID);
+            }
+        });
+        //parallelTransition.stop();
+
+        System.out.println("POSTION: \tX= " + kickOffImg.getX() + "\tY= " + kickOffImg.getY());
+        System.out.println("SCALE: \tX= "+kickOffImg.getScaleX()+"\tY= "+kickOffImg.getScaleY());
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //ballAnim.setImage(ball);
         imageStack.getChildren().clear();
         imageStack.getChildren().add(defaultImage);
     }
